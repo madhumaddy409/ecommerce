@@ -10,7 +10,7 @@ class Product(models.Model):
     name = models.CharField(max_length=60,null=True, blank=True)
     description = models.CharField(max_length=250,null=True, blank=True)
     availability = models.CharField(max_length=35,null=True, blank=True)
-    image = models.CharField(max_length=35,null=True, blank=True)
+    image = models.CharField(max_length=250,null=True, blank=True)
     ratings = models.DecimalField(decimal_places=5,max_digits=30,null=True, blank=True)
     price = models.BigIntegerField(null=True, blank=True)
     brand = models.CharField(max_length=35,null=True, blank=True)
