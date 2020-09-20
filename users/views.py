@@ -114,5 +114,5 @@ def login(request):
             return HttpResponse('login invalid')
 
     else:
-        return render(request, 'users/login.html')
+        return HttpResponse('get method')
 
