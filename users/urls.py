@@ -14,6 +14,9 @@ urlpatterns = [
     path('addstudent/', views.addstudent, name='addstudent'),
     path('image_upload', hotel_image_view, name='image_upload'),
     path('success', success, name='success'),
+    path('register/',views.register,name="register"),
+    path('login/',views.login, name='login'),
+
 
 ]+ static(settings.STATIC_URL,
            document_root = settings.STATIC_ROOT)

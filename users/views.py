@@ -1,3 +1,5 @@
+from django.contrib import messages, auth
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import serializers
 from rest_framework.decorators import api_view
@@ -75,3 +77,42 @@ def hotel_image_view(request):
 
 def success(request):
     return HttpResponse('successfully uploaded')
+
+@api_view(['GET','POST'])
+def register(request):
+    if request.method == "POST":
+        username = request.data.get('username')
+        # firstname = request.POST['fristname']
+        # lastname = request.POST['lastname']
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        # print(username,firstname,lastname,email,password)
+
+        reg = User.objects.create_user(username=username, email=email, password=password, is_staff="True")
+        reg.save()
+        return HttpResponse('successfully account created')
+    else:
+        return HttpResponse('please try again')
+
+@api_view(['GET','POST'])
+def login(request):
+    if request.method == "POST":
+        firstname = request.data.get('username')
+        password = request.data.get('password')
+        print(firstname)
+
+        user = auth.authenticate(username=firstname, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            # return render(request, 'users/profile.html')
+            return HttpResponse('login successfully')
+        else:
+            messages.info(request, 'invalid')
+            # return render(request, 'users/login.html')
+            return HttpResponse('login invalid')
+
+    else:
+        return render(request, 'users/login.html')
+
