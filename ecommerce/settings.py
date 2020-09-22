@@ -9,11 +9,13 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import django_heroku
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -88,18 +91,21 @@ DATABASES = {
 
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dds6d7utnh4ut0',
-        'USERNAME': 'pkxrmlruugazzy',
-        'PASSWORD': '970cc9fddf2a7867d56f9c6851fe904974a72e30f06d350893e24afd13469b6c',
-        'HOST': 'ec2-54-160-202-3.compute-1.amazonaws.com',
-        'PORT': '5432'
-        # 'NAME': 'ecommerce',
-        # 'USERNAME': 'maddy',
-        # 'PASSWORD': 'root',
-        # 'HOST': 'localhost',
+        'NAME': 'ecommerce',
+        'USERNAME': 'maddy',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        # 'NAME': 'dds6d7utnh4ut0',
+        # 'USERNAME': 'p970cc9fddf2a7867d56f9c6851fe904974a72e30f06d350893e24afd13469b6c',
+        # 'HOST': 'lec2-54-160-202-3.compute-1.amazonaws.com',
         # 'PORT': '5432',
     }
 }
+
+
+
+
 
 
 # Password validation
