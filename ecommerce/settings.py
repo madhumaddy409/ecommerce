@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+
+
+import dj_database_url
+
 import dj_database_url
 from pathlib import Path
 import os
@@ -84,6 +88,8 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -97,14 +103,19 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         # 'NAME': 'dds6d7utnh4ut0',
-        # 'USERNAME': 'p970cc9fddf2a7867d56f9c6851fe904974a72e30f06d350893e24afd13469b6c',
-        # 'HOST': 'lec2-54-160-202-3.compute-1.amazonaws.com',
+        # 'USERNAME': 'pkxrmlruugazzy',
+        # 'PASSWORD': '970cc9fddf2a7867d56f9c6851fe904974a72e30f06d350893e24afd13469b6c',
+        # 'HOST': 'ec2-54-160-202-3.compute-1.amazonaws.com',
         # 'PORT': '5432',
     }
 }
 
 
-
+# POSTGRES_URL = "postgres://pkxrmlruugazzy:970cc9fddf2a7867d56f9c6851fe904974a72e30f06d350893e24afd13469b6c@ec2-54-160-202-3.compute-1.amazonaws.com:5432/dds6d7utnh4ut0"
+# DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
+#
+# # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 
