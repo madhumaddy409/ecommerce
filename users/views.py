@@ -110,11 +110,16 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             # return render(request, 'users/profile.html')
-            return HttpResponse('login successfully')
+            # return HttpResponse('login successfully')
+            data ="login successfully";
+            return JsonResponse(data, safe=False)
         else:
             messages.info(request, 'invalid')
             # return render(request, 'users/login.html')
-            return HttpResponse('login invalid')
+            dataa="login invalid";
+            return JsonResponse(dataa, safe=False)
+
+            # return HttpResponse('login invalid')
 
     else:
         return HttpResponse('get method')
