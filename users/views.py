@@ -1,3 +1,4 @@
+import json
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -8,7 +9,7 @@ from rest_framework.utils import json
 from .models import Product, Student
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import *
 
@@ -57,8 +58,10 @@ def addproduct(request):
 def products(request):
     if request.method == "GET":
         products = Product.objects.all().values('id','name','description','price','image')
+        # data = json.load(products)
 
-        return HttpResponse(products)
+        return HttpResponse(products,content_type="application/json")
+        # return HttpResponse(json.dumps(products), content_type="application/json")
     else:
         return HttpResponse("get method")
 
