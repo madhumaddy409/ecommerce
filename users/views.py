@@ -57,10 +57,11 @@ def addproduct(request):
 @api_view(['GET','POST'])
 def products(request):
     if request.method == "GET":
-        products = Product.objects.all().values('id','name','description','price','image')
+        # products = Product.objects.all().values('id','name','description','price','image')
+        products = list(Product.objects.values())
         # data = json.load(products)
-
-        return HttpResponse(products,content_type="application/json")
+        return JsonResponse(products, safe=False)
+        # return HttpResponse(products,content_type="application/json")
         # return HttpResponse(json.dumps(products), content_type="application/json")
     else:
         return HttpResponse("get method")
