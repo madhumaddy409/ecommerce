@@ -57,12 +57,10 @@ def addproduct(request):
 @api_view(['GET','POST'])
 def products(request):
     if request.method == "GET":
-        # products = Product.objects.all().values('id','name','description','price','image')
         products = list(Product.objects.values())
-        # data = json.load(products)
+
         return JsonResponse(products, safe=False)
-        # return HttpResponse(products,content_type="application/json")
-        # return HttpResponse(json.dumps(products), content_type="application/json")
+
     else:
         return HttpResponse("get method")
 
@@ -122,7 +120,23 @@ def login(request):
         return HttpResponse('get method')
 
 
+@api_view(['GET', 'POST'])
+def category(request):
+    if request.method == "GET":
+        category = list(Category.objects.values())
 
+        return JsonResponse(category, safe=False)
 
+    else:
+        return HttpResponse("get method")
 
+@api_view(['GET', 'POST'])
+def brand(request):
+    if request.method == "GET":
+        brand = list(Brand.objects.values())
+
+        return JsonResponse(brand, safe=False)
+
+    else:
+        return HttpResponse("get method")
 
