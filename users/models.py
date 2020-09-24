@@ -19,3 +19,10 @@ class Product(models.Model):
 class Hotel(models.Model):
     name = models.CharField(max_length=50)
     hotel_Main_Img = models.ImageField(upload_to='images/')
+
+class Brand(models.Model):
+    name = models.CharField(max_length=60,null=True, blank=True)
+
+class Category(models.Model):
+    name = models.CharField(max_length=60,null=True, blank=True)
+
