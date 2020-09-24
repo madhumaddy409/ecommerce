@@ -21,6 +21,7 @@ def addcart(request):
     if request.method == "POST":
         product_id = request.data.get('product_id')
         name = request.data.get('name')
+        category = request.data.get('category')
         description = request.data.get('description')
         availability = request.data.get('availability')
         image = request.data.get('image')
@@ -29,7 +30,7 @@ def addcart(request):
         size = request.data.get('size')
         # print(product_idd)
 
-        reg = Product(product_id=product_id, name=name, description=description, availability=availability, image=image, price=price, brand=brand)
+        reg = Product(product_id=product_id, name=name, category= category, description=description, availability=availability, image=image, price=price, brand=brand)
         reg.save()
         return HttpResponse("product added to cart")
     else:

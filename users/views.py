@@ -37,6 +37,7 @@ def addstudent(request):
 def addproduct(request):
     if request.method == "POST":
         name = request.data.get('name')
+        category = request.data.get('category')
         description = request.data.get('description')
         availability = request.data.get('availability')
         image = request.data.get('image')
@@ -45,7 +46,7 @@ def addproduct(request):
         brand = request.data.get('brand')
         print(name)
 
-        reg = Product(name= name,description = description,availability = availability,image = image,ratings = ratings,price = price,brand = brand)
+        reg = Product(name= name,category = category,description = description,availability = availability,image = image,ratings = ratings,price = price,brand = brand)
         reg.save()
         return HttpResponse("product taken")
     else:

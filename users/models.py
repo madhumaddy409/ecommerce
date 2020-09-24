@@ -8,6 +8,7 @@ class Student(models.Model):
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60,null=True, blank=True)
+    category = models.CharField(max_length=60, null=True, blank=True)
     description = models.CharField(max_length=250,null=True, blank=True)
     availability = models.CharField(max_length=35,null=True, blank=True)
     image = models.CharField(max_length=250,null=True, blank=True)
