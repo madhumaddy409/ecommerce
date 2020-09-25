@@ -90,17 +90,35 @@ def register(request):
         email = request.data.get('email')
         password = request.data.get('password')
 
-        # print(username,firstname,lastname,email,password)
+        if User.objects.filter(username=username).exists():
+            data2 = "Username already taken";
+            return JsonResponse(data2, safe=False)
 
-        reg = User.objects.create_user(username=username, email=email, password=password, is_staff="True")
-        reg.save()
-        # return HttpResponse('successfully account created')
-        data =" register successfully";
-        return JsonResponse(data, safe=False)
+        else:
+            username_count = User.objects.filter(email=email).count()
+            if username_count > 0:
+                print("email is exist")
+                data3 = "email already taken";
+                return JsonResponse(data3, safe=False)
+            else:
+                reg = User.objects.create_user(username=username, email=email, password=password, is_staff="True")
+                reg.save()
+
+                data =" register successfully";
+                return JsonResponse(data, safe=False)
+
+
+
     else:
-        # return HttpResponse('please try again')
         data1 = "please try again";
         return JsonResponse(data1, safe=False)
+
+
+
+
+
+
+
 @api_view(['GET','POST'])
 def login(request):
     if request.method == "POST":
