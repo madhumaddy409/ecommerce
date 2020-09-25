@@ -94,7 +94,9 @@ def register(request):
 
         reg = User.objects.create_user(username=username, email=email, password=password, is_staff="True")
         reg.save()
-        return HttpResponse('successfully account created')
+        # return HttpResponse('successfully account created')
+        data =" register successfully";
+        return JsonResponse(data, safe=False)
     else:
         return HttpResponse('please try again')
 
