@@ -81,6 +81,10 @@ def hotel_image_view(request):
 def success(request):
     return HttpResponse('successfully uploaded')
 
+
+
+
+
 @api_view(['GET','POST'])
 def register(request):
     if request.method == "POST":
@@ -130,18 +134,14 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            # return render(request, 'users/profile.html')
-            # return HttpResponse('login successfully')
-            data ="login successfully";
+            request.session['username'] = user.username
+            user_name = request.session.get('username')
+            # data ="login successfully";
+            data = user_name
             return JsonResponse(data, safe=False)
         else:
             messages.info(request, 'invalid')
-            # return render(request, 'users/login.html')
             dataa="login invalid";
-            return JsonResponse(dataa, safe=False)
-
-            # return HttpResponse('login invalid')
-
     else:
         return HttpResponse('get method')
 
