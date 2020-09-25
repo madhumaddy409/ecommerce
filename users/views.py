@@ -98,8 +98,9 @@ def register(request):
         data =" register successfully";
         return JsonResponse(data, safe=False)
     else:
-        return HttpResponse('please try again')
-
+        # return HttpResponse('please try again')
+        data1 = "please try again";
+        return JsonResponse(data1, safe=False)
 @api_view(['GET','POST'])
 def login(request):
     if request.method == "POST":
