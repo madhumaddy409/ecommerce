@@ -15,7 +15,10 @@ from .forms import *
 
 
 
-# Create your views here.
+
+
+
+
 def index(request):
     return render(request, 'users/index.html')
 
@@ -125,7 +128,7 @@ def register(request):
 
 @api_view(['GET','POST'])
 def login(request):
-    if request.method == "POST":
+    if request.method == "GET":
         firstname = request.data.get('username')
         password = request.data.get('password')
         print(firstname)
@@ -140,10 +143,12 @@ def login(request):
             data = user_name
             return JsonResponse(data, safe=False)
         else:
-            messages.info(request, 'invalid')
-            dataa="login invalid";
+            data = "login invalid"
+            return JsonResponse(data, safe=False)
+
     else:
-        return HttpResponse('get method')
+        data = "get method"
+        return JsonResponse(data, safe=False)
 
 
 @api_view(['GET', 'POST'])
@@ -165,4 +170,22 @@ def brand(request):
 
     else:
         return HttpResponse("get method")
+
+
+@api_view(['GET', 'POST'])
+def userprofile(request):
+    if request.method == "POST":
+        user_name = request.session.get('username')
+        print(user_name)
+        if user_name is None:
+            data = "please login";
+            return JsonResponse(data, safe=False)
+        else:
+            # user = list(User.objects.values())
+            user = list(User.objects.filter(username=user_name).values())
+            return JsonResponse(user, safe=False)
+    else:
+        data1="get method"
+        return JsonResponse(data1, safe=False)
+
 
