@@ -128,7 +128,7 @@ def register(request):
 
 @api_view(['GET','POST'])
 def login(request):
-    if request.method == "GET":
+    if request.method == "POST":
         firstname = request.data.get('username')
         password = request.data.get('password')
         print(firstname)
