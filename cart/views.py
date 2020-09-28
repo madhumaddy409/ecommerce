@@ -9,7 +9,7 @@ from . models import CartProd
 
 @api_view(['GET','POST'])
 def cartProd(request):
-    if request.method == "GET":
+    if request.method == "POST":
         cartProd = list(CartProd.objects.values())
 
         return JsonResponse(cartProd, safe=False)
