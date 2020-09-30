@@ -1,4 +1,7 @@
 import json
+
+
+from django.contrib.sessions.models import Session
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -133,9 +136,8 @@ def login(request):
     if request.method == "POST":
         firstname = request.data.get('username')
         password = request.data.get('password')
-        # firstname = "madhu"
-        # password = "4pm15cs409"
         print(firstname)
+        data ={}
 
         user = auth.authenticate(username=firstname, password=password)
 
@@ -143,10 +145,10 @@ def login(request):
             auth.login(request, user)
             request.session['username'] = user.username
             user_name = request.session.get('username')
-            # token = Token.objects.get(user=user).key
-            # data['token'] = token
-            # data ="login successfully";
-            data = user_name
+            token = Token.objects.get(user=user).key
+            data['token'] = token
+            data['username'] = user_name
+
             return JsonResponse(data, safe=False)
         else:
             data = "login invalid"
