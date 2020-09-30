@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.utils import json
 
@@ -110,6 +111,7 @@ def register(request):
             else:
                 reg = User.objects.create_user(username=username, email=email, password=password, is_staff="True")
                 reg.save()
+                token, created = Token.objects.get_or_create(user=reg)
 
                 data =" register successfully";
                 return JsonResponse(data, safe=False)
@@ -131,6 +133,8 @@ def login(request):
     if request.method == "POST":
         firstname = request.data.get('username')
         password = request.data.get('password')
+        # firstname = "madhu"
+        # password = "4pm15cs409"
         print(firstname)
 
         user = auth.authenticate(username=firstname, password=password)
@@ -139,6 +143,8 @@ def login(request):
             auth.login(request, user)
             request.session['username'] = user.username
             user_name = request.session.get('username')
+            # token = Token.objects.get(user=user).key
+            # data['token'] = token
             # data ="login successfully";
             data = user_name
             return JsonResponse(data, safe=False)
@@ -177,13 +183,14 @@ def userprofile(request):
     if request.method == "POST":
         user_name = request.session.get('username')
         print(user_name)
-        if user_name is None:
-            data = "please login";
-            return JsonResponse(data, safe=False)
-        else:
-            # user = list(User.objects.values())
-            user = list(User.objects.filter(username=user_name).values())
-            return JsonResponse(user, safe=False)
+        return JsonResponse(user_name, safe=False)
+    #     if user_name is None:
+    #         data = "please login";
+    #         return JsonResponse(data, safe=False)
+    #     else:
+    #         # user = list(User.objects.values())
+    #         user = list(User.objects.filter(username=user_name).values())
+    #         return JsonResponse(user, safe=False)
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
