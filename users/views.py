@@ -186,13 +186,37 @@ def userprofile(request):
 
     if request.method == "POST":
         token_data = request.data.get('Token')
-        username = Token.objects.get(key=token_data).user
-        print(username)
-        user = list(User.objects.filter(username = username).values())
-        print(user)
-        return JsonResponse(user, safe=False)
+        if Token.objects.filter(key=token_data):
+            username = Token.objects.get(key=token_data).user
+            print(username)
+            user = list(User.objects.filter(username = username).values())
+            print(user)
+            return JsonResponse(user, safe=False)
+        else:
+            data = "invalid token"
+            return JsonResponse(data, safe=False)
+
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
 
 
+@api_view(['GET', 'POST'])
+def logout(request):
+
+    if request.method == "POST":
+        token_data = request.data.get('Token')
+        if Token.objects.filter(key=token_data):
+            username = Token.objects.get(key=token_data).user
+            print(username)
+            Token.objects.filter(user=username).delete()
+            token, created = Token.objects.get_or_create(user=username)
+            data = "logout successfully"
+            return JsonResponse(data, safe=False)
+        else:
+            data = "invalid token"
+            return JsonResponse(data, safe=False)
+
+    else:
+        data1="get method"
+        return JsonResponse(data1, safe=False)

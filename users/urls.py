@@ -19,6 +19,7 @@ urlpatterns = [
     path('category/',views.category, name='category'),
     path('brand/',views.brand, name='brand'),
     path('userprofile/',views.userprofile, name='userprofile'),
+    path('logout/',views.logout, name='login'),
 
 
 
