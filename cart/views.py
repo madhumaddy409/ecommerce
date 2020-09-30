@@ -38,24 +38,35 @@ def addcart(request):
             print(user_id)
             product_id = request.data.get('id')
             size = request.data.get('qty')
+            if CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).exists():
+                old_size = CartProd.objects.get(user_id_id=user_id,product_id_id=product_id).size
+                print(old_size)
+                new_size = int(old_size)+int(size)
 
-            product_name = Product.objects.get(id=product_id).name
-            product_category = Product.objects.get(id=product_id).category
-            product_description = Product.objects.get(id=product_id).description
-            product_availability = Product.objects.get(id=product_id).availability
-            product_image = Product.objects.get(id=product_id).image
-            product_ratings = Product.objects.get(id=product_id).ratings
-            product_price = Product.objects.get(id=product_id).price
-            product_brand = Product.objects.get(id=product_id).brand
 
-            print(product_id)
-            reg =CartProd(product_id_id=product_id,user_id_id = user_id, name=product_name, category= product_category,
-                          description=product_description, availability=product_availability, image=product_image,
-                          price=product_price, brand=product_brand,size=size)
-            reg.save()
 
-            data = "product added"
-            return JsonResponse(data, safe=False)
+                CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).update(size=new_size)
+                data = "update cart"
+                return JsonResponse(data, safe=False)
+            else:
+
+                product_name = Product.objects.get(id=product_id).name
+                product_category = Product.objects.get(id=product_id).category
+                product_description = Product.objects.get(id=product_id).description
+                product_availability = Product.objects.get(id=product_id).availability
+                product_image = Product.objects.get(id=product_id).image
+                product_ratings = Product.objects.get(id=product_id).ratings
+                product_price = Product.objects.get(id=product_id).price
+                product_brand = Product.objects.get(id=product_id).brand
+
+                print(product_id)
+                reg =CartProd(product_id_id=product_id,user_id_id = user_id, name=product_name, category= product_category,
+                              description=product_description, availability=product_availability, image=product_image,
+                              price=product_price, brand=product_brand,size=size)
+                reg.save()
+
+                data = "product added"
+                return JsonResponse(data, safe=False)
         else:
             data = "invalid token"
             return JsonResponse(data, safe=False)
