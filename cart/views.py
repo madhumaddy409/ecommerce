@@ -36,8 +36,8 @@ def addcart(request):
             print(username)
             user_id = User.objects.get(username=username).id
             print(user_id)
-            product_id = request.data.get('product_id')
-            size = request.data.get('size')
+            product_id = request.data.get('id')
+            size = request.data.get('qty')
 
             product_name = Product.objects.get(id=product_id).name
             product_category = Product.objects.get(id=product_id).category
