@@ -182,17 +182,15 @@ def brand(request):
 
 @api_view(['GET', 'POST'])
 def userprofile(request):
+    data = {}
+
     if request.method == "POST":
-        user_name = request.session.get('username')
-        print(user_name)
-        return JsonResponse(user_name, safe=False)
-    #     if user_name is None:
-    #         data = "please login";
-    #         return JsonResponse(data, safe=False)
-    #     else:
-    #         # user = list(User.objects.values())
-    #         user = list(User.objects.filter(username=user_name).values())
-    #         return JsonResponse(user, safe=False)
+        token_data = request.data.get('Token')
+        username = Token.objects.get(key=token_data).user
+        print(username)
+        user = list(User.objects.filter(username = username).values())
+        print(user)
+        return JsonResponse(user, safe=False)
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
