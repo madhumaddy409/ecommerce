@@ -130,11 +130,11 @@ def register(request):
 
 @api_view(['GET','POST'])
 def login(request):
-    if request.method == "POST":
-        firstname = request.data.get('username')
-        password = request.data.get('password')
-        # firstname = "madhu"
-        # password = "4pm15cs409"
+    if request.method == "GET":
+        # firstname = request.data.get('username')
+        # password = request.data.get('password')
+        firstname = "madhu"
+        password = "4pm15cs409"
         print(firstname)
 
         user = auth.authenticate(username=firstname, password=password)
@@ -180,7 +180,7 @@ def brand(request):
 
 @api_view(['GET', 'POST'])
 def userprofile(request):
-    if request.method == "POST":
+    if request.method == "GET":
         user_name = request.session.get('username')
         print(user_name)
         return JsonResponse(user_name, safe=False)
