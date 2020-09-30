@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-
+from rest_framework.authtoken.models import Token
 
 from rest_framework.decorators import api_view
 
@@ -10,9 +11,17 @@ from . models import CartProd
 @api_view(['GET','POST'])
 def cartProd(request):
     if request.method == "POST":
-        cartProd = list(CartProd.objects.values())
-
-        return JsonResponse(cartProd, safe=False)
+        token_data = request.headers.get('Authorization')
+        if Token.objects.filter(key=token_data):
+            username = Token.objects.get(key=token_data).user
+            print(username)
+            user_id = User.objects.get(username=username).id
+            print(user_id )
+            cart_prod = list(CartProd.objects.filter(user_id_id=user_id).values())
+            return JsonResponse(cart_prod, safe=False)
+        else:
+            data = "invalid token"
+            return JsonResponse(data, safe=False)
 
     else:
         data = "get method";
