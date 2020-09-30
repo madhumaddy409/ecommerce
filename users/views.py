@@ -185,7 +185,7 @@ def userprofile(request):
     data = {}
 
     if request.method == "POST":
-        token_data = request.data.get('Token')
+        token_data = request.headers.get('Authorization')
         if Token.objects.filter(key=token_data):
             username = Token.objects.get(key=token_data).user
             print(username)
@@ -205,7 +205,7 @@ def userprofile(request):
 def logout(request):
 
     if request.method == "POST":
-        token_data = request.data.get('Token')
+        token_data = request.headers.get('Authorization')
         if Token.objects.filter(key=token_data):
             username = Token.objects.get(key=token_data).user
             print(username)
