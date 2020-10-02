@@ -15,5 +15,5 @@ class Order(models.Model):
     orderdate = models.DateTimeField(auto_now_add=True, blank=True)
     ordersatus = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
-
+    payment_method = models.CharField(max_length=25, null=True, blank=True)
 

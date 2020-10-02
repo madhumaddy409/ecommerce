@@ -47,9 +47,11 @@ def addorder(request):
             product_price = request.data.get('price')
             phone_number = request.data.get('phone')
 
+            payment_method = request.data.get('payment_method')
+
 
             print(product_id)
-            reg = Order(product_id=product_id,user_id=user_id,price=product_price,quantity=quantity,address=address,ordersatus=Ordersatus,phone_number=phone_number)
+            reg = Order(product_id=product_id,user_id=user_id,price=product_price,quantity=quantity,address=address,ordersatus=Ordersatus,phone_number=phone_number,payment_method=payment_method)
             reg.save()
 
             data = "order placed"
