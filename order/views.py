@@ -45,10 +45,11 @@ def addorder(request):
             Ordersatus = "Pending"
 
             product_price = request.data.get('price')
+            phone_number = request.data.get('phone')
 
 
             print(product_id)
-            reg = Order(product_id=product_id,user_id=user_id,price=product_price,quantity=quantity,address=address,ordersatus=Ordersatus)
+            reg = Order(product_id=product_id,user_id=user_id,price=product_price,quantity=quantity,address=address,ordersatus=Ordersatus,phone_number=phone_number)
             reg.save()
 
             data = "order placed"
