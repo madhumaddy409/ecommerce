@@ -17,3 +17,11 @@ class Order(models.Model):
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     payment_method = models.CharField(max_length=25, null=True, blank=True)
 
+
+class Payment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
+    price = models.BigIntegerField(null=True, blank=True)
+    transaction_date = models.DateTimeField(auto_now_add=True, blank=True)
+    transacsatus = models.CharField(max_length=100, null=True, blank=True)
+
