@@ -51,13 +51,13 @@ def addcart(request):
                     CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).update(size=new_size)
                     data = "update cart"
                     return JsonResponse(data, safe=False)
-                elif actionType == "subtract":
+                elif ((actionType == "subtract") and (old_size != 1)):
                     old_size = CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).size
                     print(old_size)
                     new_size = int(old_size) - int(size)
 
                     CartProd.objects.filter(user_id_id=user_id, product_id_id=product_id).update(size=new_size)
-                    data = "update cart"
+                    data = "subtract cart"
                     return JsonResponse(data, safe=False)
                 elif ((actionType == "subtract") and (old_size == 1)):
                     CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).delete()
