@@ -40,6 +40,7 @@ def addcart(request):
             actionType = request.data.get('actionType')
             size = request.data.get('qty')
             if CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).exists():
+                old_size = CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).size
                 if actionType == "add":
                     old_size = CartProd.objects.get(user_id_id=user_id,product_id_id=product_id).size
                     print(old_size)
@@ -58,10 +59,19 @@ def addcart(request):
                     CartProd.objects.filter(user_id_id=user_id, product_id_id=product_id).update(size=new_size)
                     data = "update cart"
                     return JsonResponse(data, safe=False)
+                elif ((actionType == "subtract") and (old_size == 1)):
+                    CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).delete()
+                    data = "cart deleted"
+                    return JsonResponse(data, safe=False)
+
+
+
+
                 elif actionType == "delete":
                     CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).delete()
                     data = "cart deleted"
                     return JsonResponse(data, safe=False)
+
                 else:
                     data = "operation failed"
                     return JsonResponse(data, safe=False)
