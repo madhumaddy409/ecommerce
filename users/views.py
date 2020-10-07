@@ -1,19 +1,15 @@
 import json
 
-
+from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from rest_framework import serializers
+from django.core.mail import send_mail, BadHeaderError
+
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
-from rest_framework.utils import json
 
-from .models import Product, Student
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import *
 
@@ -220,3 +216,49 @@ def logout(request):
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
+
+
+@api_view(['GET', 'POST'])
+def sendemail(request):
+    if request.method == "POST":
+
+        email = request.data.get('email')
+        username = User.objects.get(email=email).username
+        print(username)
+        user_id = User.objects.get(email=email).id
+        print(username)
+        token = Token.objects.get(user=user_id).key
+        subject = "change password"
+        message = 'use link to change the password https://www.google.com/v='+str(token)
+        from_email = "itech.maddy.tm@gmail.com"
+
+
+        if subject and message and from_email:
+            try:
+                send_mail(subject, message, from_email, [email])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect('/users/')
+    else:
+         return HttpResponse('Make sure all fields are entered and valid.')
+
+@api_view(['GET', 'POST'])
+def changepassword(request):
+    if request.method == "POST":
+        username =  request.data.get('username')
+        password = request.data.get('password')
+        u = User.objects.get(username=username)
+        u.set_password(password)
+        if u.save():
+            data1 ="password changed"
+            return JsonResponse(data1, safe=False)
+        else:
+            data1 = "password changed"
+            return JsonResponse(data1, safe=False)
+
+
+    else:
+        data1="get method"
+        return JsonResponse(data1, safe=False)
+
+

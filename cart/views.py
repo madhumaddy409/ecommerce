@@ -37,17 +37,39 @@ def addcart(request):
             user_id = User.objects.get(username=username).id
             print(user_id)
             product_id = request.data.get('id')
+            actionType = request.data.get('actionType')
             size = request.data.get('qty')
             if CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).exists():
-                old_size = CartProd.objects.get(user_id_id=user_id,product_id_id=product_id).size
-                print(old_size)
-                new_size = int(old_size)+int(size)
+                if actionType == "add":
+                    old_size = CartProd.objects.get(user_id_id=user_id,product_id_id=product_id).size
+                    print(old_size)
+                    new_size = int(old_size)+int(size)
 
 
 
-                CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).update(size=new_size)
-                data = "update cart"
-                return JsonResponse(data, safe=False)
+                    CartProd.objects.filter(user_id_id=user_id,product_id_id=product_id).update(size=new_size)
+                    data = "update cart"
+                    return JsonResponse(data, safe=False)
+                elif actionType == "subtract":
+                    old_size = CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).size
+                    print(old_size)
+                    new_size = int(old_size) - int(size)
+
+                    CartProd.objects.filter(user_id_id=user_id, product_id_id=product_id).update(size=new_size)
+                    data = "update cart"
+                    return JsonResponse(data, safe=False)
+                elif actionType == "delete":
+                    CartProd.objects.get(user_id_id=user_id, product_id_id=product_id).delete()
+                    data = "cart deleted"
+                    return JsonResponse(data, safe=False)
+                else:
+                    data = "operation failed"
+                    return JsonResponse(data, safe=False)
+
+
+
+
+
             else:
 
                 product_name = Product.objects.get(id=product_id).name

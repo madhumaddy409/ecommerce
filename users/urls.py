@@ -20,10 +20,10 @@ urlpatterns = [
     path('brand/',views.brand, name='brand'),
     path('userprofile/',views.userprofile, name='userprofile'),
     path('logout/',views.logout, name='login'),
+    path('sendemail/',views.sendemail, name='sendemail'),
+    path('changepassword/', views.changepassword, name='sendemail'),
 
-
-
-]+ static(settings.STATIC_URL,
+              ]+ static(settings.STATIC_URL,
            document_root = settings.STATIC_ROOT)
 # + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 
