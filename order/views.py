@@ -1,9 +1,13 @@
+from operator import itemgetter
+
 from django.shortcuts import render
 
 # Create your views here.
+from psycopg2._psycopg import cursor
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+import json
 from users.models import Product
 from django.http import HttpResponse, JsonResponse
 
@@ -33,28 +37,34 @@ def orders(request):
 @api_view(['GET','POST'])
 def addorder(request):
     if request.method == "POST":
+        product = json.loads(request.body)
+
+
         token_data = request.headers.get('Authorization')
         if Token.objects.filter(key=token_data):
             username = Token.objects.get(key=token_data).user
-            print(username)
             user_id = User.objects.get(username=username).id
-            print(user_id)
-            product_id = request.data.get('id')
-            quantity = request.data.get('qty')
-            address = request.data.get('address')
-            Ordersatus = "Pending"
 
-            product_price = request.data.get('price')
-            phone_number = request.data.get('phone')
+            phone_number = product['phone']
+            address = product['address']
+            Ordersatus = "pending"
+            payment_method = product['payment_method']
 
-            payment_method = request.data.get('payment_method')
+            products = request.data.get('products')
+            for value in products:
+                print(value)
 
 
-            print(product_id)
-            reg = Order(product_id=product_id,user_id=user_id,price=product_price,quantity=quantity,address=address,ordersatus=Ordersatus,phone_number=phone_number,payment_method=payment_method)
-            reg.save()
 
-            data = "order placed"
+                reg = Order(product_id=value['id'], user_id=user_id, price=0, quantity=value['qty'],
+                            address=address, ordersatus=Ordersatus, phone_number=phone_number,
+                            payment_method=payment_method)
+                reg.save()
+
+            # product_id = request.pro['payment_method']
+            # print(product_id)
+
+            data ="order placed"
             return JsonResponse(data, safe=False)
         else:
             data = "invalid token"
