@@ -51,24 +51,44 @@ def addorder(request):
             address = product['address']
             Ordersatus = "pending"
             payment_method = product['payment_method']
+            parchaseType = product['parchaseType']
 
             products = request.data.get('products')
-            for value in products:
-                print(value)
+
+            if(parchaseType=="cart"):
+
+                for value in products:
+                    print(value)
 
 
 
-                reg = Order(product_id=value['id'], user_id=user_id, price=0, quantity=value['qty'],
-                            address=address, ordersatus=Ordersatus, phone_number=phone_number,
-                            payment_method=payment_method)
-                reg.save()
-                CartProd.objects.get(user_id_id=user_id, product_id=value['id']).delete()
+                    reg = Order(product_id=value['id'], user_id=user_id, price=0, quantity=value['qty'],
+                                address=address, ordersatus=Ordersatus, phone_number=phone_number,
+                                payment_method=payment_method)
+                    reg.save()
+                    CartProd.objects.get(user_id_id=user_id, product_id=value['id']).delete()
 
-            # product_id = request.pro['payment_method']
-            # print(product_id)
+                # product_id = request.pro['payment_method']
+                # print(product_id)
+                #parchaseType=cart/bynow
 
-            data ="order placed"
-            return JsonResponse(data, safe=False)
+                data ="order placed"
+                return JsonResponse(data, safe=False)
+            elif(parchaseType=="bynow"):
+                for value in products:
+                    print(value)
+
+                    reg = Order(product_id=value['id'], user_id=user_id, price=0, quantity=value['qty'],
+                                address=address, ordersatus=Ordersatus, phone_number=phone_number,
+                                payment_method=payment_method)
+                    reg.save()
+                data = "order placed"
+                return JsonResponse(data, safe=False)
+            else:
+                data = "invalid"
+                return JsonResponse(data, safe=False)
+
+
         else:
             data = "invalid token"
             return JsonResponse(data, safe=False)
