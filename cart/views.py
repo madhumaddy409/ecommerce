@@ -65,9 +65,7 @@ def addcart(request):
 
                                 if old_size==1:
                                     CartProd.objects.filter(user_id_id=user_id, product_id=value['id']).delete()
-                                #
-                                #
-                                #
+
                                 else:
                                     new_size = old_size - value['qty']
                                     if new_size ==0:
