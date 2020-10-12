@@ -12,8 +12,8 @@ from users.models import Product
 from django.http import HttpResponse, JsonResponse
 
 
-from . models import CartProd
 from . models import Order
+from cart.models import CartProd
 
 
 @api_view(['GET','POST'])
