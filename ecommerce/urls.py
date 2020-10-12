@@ -25,6 +25,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('cart/', include('cart.urls')),
     path('order/', include('order.urls')),
+    path('homepageslider/', include('homepageslider.urls')),
 
 
 
