@@ -61,6 +61,7 @@ def addproduct(request):
 def products(request):
     if request.method == "GET":
         products = list(Product.objects.values())
+        print(products)
 
         return JsonResponse(products, safe=False)
 
@@ -260,5 +261,6 @@ def changepassword(request):
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
+    # test is executing
 
 
