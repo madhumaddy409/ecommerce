@@ -212,6 +212,8 @@ def logout(request):
             return JsonResponse(data, safe=False)
         else:
             data = "invalid token"
+            print(data)
+
             return JsonResponse(data, safe=False)
 
     else:
@@ -261,6 +263,4 @@ def changepassword(request):
     else:
         data1="get method"
         return JsonResponse(data1, safe=False)
-    # test is executing
-
-
+    # test is
